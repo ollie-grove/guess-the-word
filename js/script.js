@@ -2,7 +2,7 @@
 const guessedLetters = document.querySelector(".guessed-letters"); 
 
 //"Guess" button
-const button = document.querySelector(".button-element"); 
+const guessButton = document.querySelector(".button-element"); 
 
 //Letter input box 
 const letterInput = document.querySelector(".letter");  
@@ -37,5 +37,10 @@ const placeholder = function (word) {
 
 placeholder(word); 
 
-
+guessButton.addEventListener("click", function(e) {
+    e.preventDefault(); 
+    const guess = letterInput.value; 
+    console.log(guess); 
+    letterInput.value = ""; 
+});
 
