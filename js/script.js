@@ -23,22 +23,31 @@ const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");  
 
 //First test word
-const word = "magnolia"; 
+let word = "magnolia"; 
 
 //This array will contain all the letters the player guesses.
 const guessedLetters = []; 
+
+//DECLARE A GLOBAL VARIABLE FOR THE NUMBER OF GUESSES 
+
+let remainingGuesses = 8; 
+
+
+//ADD AN ASYNC FUNCTION 
+
+
 
 //Circle symbols to represent each letter in the word  
 const placeholder = function (word) {
     const placeholderLetters = []; 
     for (const letter of word) {
-        console.log(letter); 
+        //console.log(letter); 
         placeholderLetters.push("●");
     }
     wordInProgress.innerText = placeholderLetters.join(""); 
 }; 
 
-placeholder(word); 
+//placeholder(word); 
 
 //To prevent the default behavior of clicking a button, the form submitting, and then reloading the page, add the e.preventDefault(); 
 
@@ -97,6 +106,7 @@ const makeGuess = function(guess) {
     } else {
         guessedLetters.push(guess); 
         console.log(guessedLetters); 
+        updateRemainingGuesses();
         showLetterGuesses(); 
         updateWordInProgress(guessedLetters); 
     }
@@ -146,6 +156,39 @@ const updateWordInProgress = function (guessedLetters) {
     wordInProgress.innerText = showWord.join(""); 
     checkForWin(); 
 };
+
+//CREATE A FUNCTION TO COUNT REMAINING GUESSES
+// Function that will accept the guess input as a parameter.
+//Grab the word and make it uppercase.
+//Find out if the word contains the guessedLetter. If it doesn't include the letter from guess (! = not / false), let the player knoww that the word doesn't contain the letter and subtract 1 from their remainingGuesses. If it does contain a letter, let the player know the letter is in the word. 
+
+const updateRemainingGuesses = function (guess) {
+    const upperWord = word.toUpperCase(); 
+    if (!upperWord.includes(guess)) {
+        console.log("Womp womp - bad guess, lose a chance"); 
+        message.innerText = `Sorry, the word has no ${guess}.`; 
+        remainingGuesses -= 1; 
+    } else {
+        message.innerText = `Good guess! The word has the letter ${guess}.`; 
+    }
+
+//Determine if the remainingGuesses is a value of 0. If they have no guesses remaining, update the message to say the game is over and what the word is. If they have 1 guess, update the span inside the paragraph where the remaining guesses will display to tell the player they have one guess remaining. If they have more than one guess, update the same span element to tell them the number of guesses remaining. 
+
+    if (remainingGuesses === 0) {
+        message.innerHTML = `Game over! The word was <span class = "highlight">${word}</span>.`; 
+    } else if (remainingGuesses === 1) {
+        message.innerText = `${remainingGuesses} guess`; 
+    } else {
+        spanRemaining.innerText = `${remainingGuesses} guesses`; 
+    }
+    }; 
+
+
+
+
+//CALL THE NEW FUNCTION AND TEST THE GAME 
+
+
 
 //CREATE A FUNCTION TO CHECK IF THE PLAYER WON
 
