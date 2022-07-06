@@ -34,8 +34,22 @@ let remainingGuesses = 8;
 
 
 //ADD AN ASYNC FUNCTION 
+//Transform the data you fetched into an array, with each word separated by a line break (newline). Use delimiter const wordArray = words.split("\n")
+//Grab a random word from the file, create a variable to pull a random index from the wordArray (using Math.floor(Math.random)).
+//still in the funciton, pull out a random word from the array and remove any whitespae around the word using the trim() method. Reassign the valuue of the existing word global variable to this new random word (also declare the glocal word variable with let instead of const)
 
+const getWord = async function () {
+    const response = await fetch ("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt"); 
+    const words = await response.text(); 
+    //console.log(words); 
+    const wordArray = words.split("\n"); 
+    //console.log(wordArray); 
+    const randomIndex = Math.floor(Math.random() * wordArray.length); 
+    word = wordArray[randomIndex].trim(); 
+    placeholder(word); 
+};
 
+getWord(); 
 
 //Circle symbols to represent each letter in the word  
 const placeholder = function (word) {
@@ -46,8 +60,6 @@ const placeholder = function (word) {
     }
     wordInProgress.innerText = placeholderLetters.join(""); 
 }; 
-
-//placeholder(word); 
 
 //To prevent the default behavior of clicking a button, the form submitting, and then reloading the page, add the e.preventDefault(); 
 
@@ -67,9 +79,6 @@ guessButton.addEventListener("click", function(e) {
     letterInput.value = ""; 
      
 });
-
-
-
 
 //Function that accepts the input value as a parameter to validate the player's input
 
@@ -177,7 +186,7 @@ const updateRemainingGuesses = function (guess) {
     if (remainingGuesses === 0) {
         message.innerHTML = `Game over! The word was <span class = "highlight">${word}</span>.`; 
     } else if (remainingGuesses === 1) {
-        message.innerText = `${remainingGuesses} guess`; 
+        spanRemaining.innerText = `${remainingGuesses} guess`; 
     } else {
         spanRemaining.innerText = `${remainingGuesses} guesses`; 
     }
