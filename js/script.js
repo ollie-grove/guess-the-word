@@ -22,11 +22,10 @@ const message = document.querySelector(".message");
 //Hidden button that appears prompting player to play again 
 const playAgainButton = document.querySelector(".play-again");  
 
-//First test word
 let word = "magnolia"; 
 
 //This array will contain all the letters the player guesses.
-const guessedLetters = []; 
+let guessedLetters = []; 
 
 //DECLARE A GLOBAL VARIABLE FOR THE NUMBER OF GUESSES 
 
@@ -115,7 +114,7 @@ const makeGuess = function(guess) {
     } else {
         guessedLetters.push(guess); 
         console.log(guessedLetters); 
-        updateRemainingGuesses();
+        updateRemainingGuesses(guess);
         showLetterGuesses(); 
         updateWordInProgress(guessedLetters); 
     }
@@ -154,7 +153,7 @@ const updateWordInProgress = function (guessedLetters) {
     const wordArray = wordUpper.split(""); 
     //new array with updated characters
     const showWord = []; 
-    console.log(wordArray); 
+    //console.log(wordArray); 
     for (const letter of wordArray) {
         if (guessedLetters.includes(letter)) {
             showWord.push(letter.toUpperCase()); 
@@ -174,7 +173,7 @@ const updateWordInProgress = function (guessedLetters) {
 const updateRemainingGuesses = function (guess) {
     const upperWord = word.toUpperCase(); 
     if (!upperWord.includes(guess)) {
-        console.log("Womp womp - bad guess, lose a chance"); 
+        //console.log("Womp womp - bad guess, lose a chance"); 
         message.innerText = `Sorry, the word has no ${guess}.`; 
         remainingGuesses -= 1; 
     } else {
@@ -211,6 +210,30 @@ const checkForWin = function () {
     if (word.toUpperCase() === wordInProgress.innerText) {
         message.classList.add("win"); 
         message.innerHTML = `<p class="highlight">You guessed correct the word! Congrats!</p>`; 
+
+        startOver(); 
     }
 }; 
 
+
+//Function to hide and show guess button, paragraph with remaining guesses, UL where guessed letters appear 
+
+const startOver = function () {
+    guessButton.classList.add("hide"); 
+    guessesRemaining.classList.add("hide"); 
+    guessedLettersList.classList.add("hide");
+    playAgainButton.classList.remove("hide"); 
+};
+
+//Add a click event to the play again button
+
+playAgainButton.addEventListener("click", function () {
+    message.classList.remove("win"); 
+    message.innerText = ""; 
+    guessedLettersList.innerHTML = ""; 
+    remainingGuesses = 8; 
+    guessedLetter = []; 
+    spanRemaining.innerText = `${remainingGuesses} guesses`; 
+
+    getWord(); 
+});
