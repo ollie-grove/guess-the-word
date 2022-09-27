@@ -184,6 +184,7 @@ const updateRemainingGuesses = function (guess) {
 
     if (remainingGuesses === 0) {
         message.innerHTML = `Game over! The word was <span class = "highlight">${word}</span>.`; 
+        startOver(); 
     } else if (remainingGuesses === 1) {
         spanRemaining.innerText = `${remainingGuesses} guess`; 
     } else {
@@ -229,11 +230,17 @@ const startOver = function () {
 
 playAgainButton.addEventListener("click", function () {
     message.classList.remove("win"); 
-    message.innerText = ""; 
-    guessedLettersList.innerHTML = ""; 
+    guessedLetters = []; 
     remainingGuesses = 8; 
-    guessedLetter = []; 
     spanRemaining.innerText = `${remainingGuesses} guesses`; 
+    guessedLettersList.innerHTML = ""; 
+    message.innerText = "";
 
     getWord(); 
+    
+    guessButton.classList.remove("hide");
+    playAgainButton.classList.add("hide");
+    guessesRemaining.classList.remove("hide");
+    guessedLettersList.classList.remove("hide");
 });
+
