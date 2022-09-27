@@ -89,16 +89,16 @@ const playerInput = function (input) {
     //Conditional block to check for 3 scenarios: 1) check if the input is empty. 2) Check if the player has entered more than on letter. 3) Check if they've entered a character that doesn't match the regular expression pattern (.match() method here). Each condition should have a message directing the player on what to input. If all other conditions aren't met, the input is a letter. Return the input. 
 
     if (input.length === 0) {
-        console.log("Is the input empty?"); 
+        //console.log("Is the input empty?"); 
         message.innerText = "Please enter a letter"; 
     } else if (input.lenth > 1) {
-        console.log("Did you enter more than one letter?")
+        //console.log("Did you enter more than one letter?")
         message.innerText = "Please enter a single letter."; 
     } else if (!input.match(acceptedLetter)) {
-        console.log("Did you type a number or a special character?");
+        //console.log("Did you type a number or a special character?");
         message.innerText = "Please enter a letter from A to Z.";
     } else {
-        console.log("Yay, we got a single letter!");
+        //console.log("Yay, we got a single letter!");
 
     return input; 
     }
